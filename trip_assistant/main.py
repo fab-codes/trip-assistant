@@ -9,7 +9,7 @@ async def start_network(data: str) -> dict:
 
     result: GeneralState = await app.ainvoke({"ideal_destination_description": data}, {"configurable": {"thread_id": "1"}})
 
-    logger.info('Graph final result')
+    logger.info('📊 Graph final result')
     logger.info(result)
 
     return {"final_destination": result["destination_place"]}

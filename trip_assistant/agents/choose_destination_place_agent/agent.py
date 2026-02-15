@@ -30,7 +30,7 @@ class ChooseDestinationPlaceAgent(BaseAgent):
 
             result = await self.llm.ainvoke(messages)
 
-            logger.info("Choose destination place completed")
+            logger.info("✈️ Choose destination place completed")
 
             return {
                 "destination_place": result.content,
