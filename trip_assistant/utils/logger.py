@@ -1,6 +1,6 @@
 import logging
 import sys
-from src.config import AppConfig
+from trip_assistant.config import AppConfig
 
 def setup_logging():
     """Setup logging configuration"""

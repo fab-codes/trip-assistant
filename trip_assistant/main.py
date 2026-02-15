@@ -1,6 +1,6 @@
-from src.graph.compile_graph import compile_graph
-from src.graph.states.general_state import GeneralState
-from src.utils.logger import get_logger
+from trip_assistant.graph.compile_graph import compile_graph
+from trip_assistant.graph.states.general_state import GeneralState
+from trip_assistant.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

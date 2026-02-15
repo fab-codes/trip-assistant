@@ -1,7 +1,7 @@
-from src.graph.nodes.choose_destination_place_node import choose_destination_place_node
-from src.graph.states.general_state import GeneralState
+from trip_assistant.graph.nodes.choose_destination_place_node import choose_destination_place_node
+from trip_assistant.graph.states.general_state import GeneralState
 from langgraph.graph import StateGraph, START, END
-from src.utils.logger import get_logger
+from trip_assistant.utils.logger import get_logger
 from langgraph.checkpoint.memory import InMemorySaver
 
 logger = get_logger(__name__)

@@ -1,8 +1,8 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from src.agents.base_agent import BaseAgent
-from src.config import AppConfig
-from src.graph.states.general_state import GeneralState
-from src.utils.logger import get_logger
+from trip_assistant.agents.base_agent import BaseAgent
+from trip_assistant.config import AppConfig
+from trip_assistant.graph.states.general_state import GeneralState
+from trip_assistant.utils.logger import get_logger
 from langchain_core.messages import SystemMessage, HumanMessage
 
 logger = get_logger(__name__)

@@ -1,6 +1,6 @@
 from langgraph.graph import MessagesState
 
-from src.types.flight_option import FlightOption
+from trip_assistant.types.flight_option import FlightOption
 
 class GeneralState(MessagesState):
     ideal_destination_description: str
