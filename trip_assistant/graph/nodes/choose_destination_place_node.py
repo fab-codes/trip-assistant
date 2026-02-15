@@ -4,7 +4,7 @@ from trip_assistant.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-async def choose_destination_place_node(state: GeneralState) -> dict:
-    agent = ChooseDestinationPlaceAgent()
+agent = ChooseDestinationPlaceAgent()
 
+async def choose_destination_place_node(state: GeneralState) -> dict:
     return await agent.process(state)
