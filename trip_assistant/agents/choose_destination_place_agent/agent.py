@@ -2,6 +2,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from trip_assistant.agents.base_agent import BaseAgent
 from trip_assistant.config import AppConfig
 from trip_assistant.graph.states.general_state import GeneralState
+from trip_assistant.types.destination_option import DestinationOptions
 from trip_assistant.utils.logger import get_logger
 from langchain_core.messages import SystemMessage, HumanMessage
 
@@ -17,7 +18,12 @@ class ChooseDestinationPlaceAgent(BaseAgent):
         )
 
         sys_msg = SystemMessage(
-            content="You are an expert travel organizer. Choose the ideal destination based on the user's description."
+            content=(
+                "You are an expert travel organizer. "
+                "Based on the user's description, suggest a list of 3-5 ideal destinations. "
+                "For each destination, provide the city name and a short description "
+                "explaining why it suits the user's needs."
+            )
         )
 
         super().__init__(llm, "ChooseDestinationPlaceAgent", sys_msg)
@@ -26,15 +32,17 @@ class ChooseDestinationPlaceAgent(BaseAgent):
         try:
             human_msg = HumanMessage(content=state["ideal_destination_description"])
 
+            structured_llm = self.llm.with_structured_output(DestinationOptions)
+
             messages = [self.sys_message, human_msg]
 
-            result = await self.llm.ainvoke(messages)
+            result: DestinationOptions = await structured_llm.ainvoke(messages)
 
-            logger.info("✈️ Choose destination place completed")
+            logger.info(f"✈️ Proposed {len(result.destinations)} destinations")
 
             return {
-                "destination_place": result.content,
-                "messages": [human_msg, result]
+                "destination_options": result,
+                "messages": [human_msg]
             }
 
         except Exception as e:
