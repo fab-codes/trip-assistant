@@ -34,7 +34,7 @@ class CreateItineraryAgent(BaseAgent):
             logger.info("📝 Itinerary creation completed")
 
             return {
-                "destination_place": result.content,
+                "itinerary": result.content,
                 "messages": [human_msg, result]
             }
 
