@@ -7,6 +7,8 @@ dependencies = [
     "python-dotenv",
     "langchain-google-genai",
     "langgraph",
+    "pydantic",
+    "langchain-tavily"
 ]
 
 [project.optional-dependencies]
