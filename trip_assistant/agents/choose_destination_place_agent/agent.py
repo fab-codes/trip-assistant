@@ -1,4 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.agents.structured_output import ToolStrategy
 from trip_assistant.agents.base_agent import BaseAgent
 from trip_assistant.config import AppConfig
 from trip_assistant.graph.states.general_state import GeneralState
@@ -26,22 +27,25 @@ class ChooseDestinationPlaceAgent(BaseAgent):
             )
         )
 
-        super().__init__(llm, "ChooseDestinationPlaceAgent", sys_msg)
+        super().__init__(
+            llm=llm,
+            agent_name="ChooseDestinationPlaceAgent",
+            sys_message=sys_msg,
+            response_format=ToolStrategy(DestinationOptions)
+        )
 
     async def process(self, state: GeneralState) -> dict:
         try:
             human_msg = HumanMessage(content=state["ideal_destination_description"])
 
-            structured_llm = self.llm.with_structured_output(DestinationOptions)
+            result = await self.agent.ainvoke({"messages": [human_msg]})
 
-            messages = [self.sys_message, human_msg]
+            destinations: DestinationOptions = result["structured_response"]
 
-            result: DestinationOptions = await structured_llm.ainvoke(messages)
-
-            logger.info(f"✈️ Proposed {len(result.destinations)} destinations")
+            logger.info(f"✈️ Proposed {len(destinations.destinations)} destinations")
 
             return {
-                "destination_options": result,
+                "destination_options": destinations,
                 "messages": [human_msg]
             }
 

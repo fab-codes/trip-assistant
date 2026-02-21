@@ -27,15 +27,15 @@ class CreateItineraryAgent(BaseAgent):
         try:
             human_msg = HumanMessage(content=state["destination_place"])
 
-            messages = [self.sys_message, human_msg]
+            result = await self.agent.ainvoke({"messages": [human_msg]})
 
-            result = await self.llm.ainvoke(messages)
+            ai_msg = result["messages"][-1]
 
             logger.info("📝 Itinerary creation completed")
 
             return {
-                "itinerary": result.content,
-                "messages": [human_msg, result]
+                "itinerary": ai_msg.content,
+                "messages": [human_msg, ai_msg]
             }
 
         except Exception as e:
